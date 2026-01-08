@@ -16,7 +16,7 @@ def register(request):
             return redirect('task_list')
     else:
         form = UserCreationForm()
-    return render(request, 'registration/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
 
 # 1. READ: List tasks (Access Control implemented)
 @login_required

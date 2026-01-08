@@ -9,7 +9,7 @@ load_dotenv()
 # This points to the folder containing manage.py
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-dev-key-change-me'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-dev-key-fallback')
 
 DEBUG = True
 
@@ -63,6 +63,13 @@ DATABASES = {
     }
 }
 
+# Cache backend required for rate limiting
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
 # 6. Password Validation & Hashing
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -85,6 +92,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
+        'NAME': 'core.validators.NumberValidator',
+    },
+    {
+        'NAME': 'core.validators.SpecialCharacterValidator',
+    },
+    {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
@@ -94,8 +107,8 @@ LOGIN_URL = 'login'  # Redirects to the named URL 'login'
 LOGIN_REDIRECT_URL = 'task_list'  # Redirects here after successful login
 LOGOUT_REDIRECT_URL = 'login'
 
-CSRF_COOKIE_SECURE = not DEBUG  # Set to True in production
-SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Strict'
 CSRF_COOKIE_SAMESITE = 'Strict'
