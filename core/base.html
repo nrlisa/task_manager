@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+    <style>
+        :root {
+            --purple-primary: #673ab7;
+            --purple-dark: #512da8;
+            --purple-light: #f3e5f5;
+            --white: #ffffff;
+        }
+        body {
+            background-color: var(--purple-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        nav {
+            background-color: var(--purple-primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1rem;
+            font-weight: 500;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .card {
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            border-top: 8px solid var(--purple-primary);
+        }
+        h2 {
+            color: var(--purple-dark);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+        form p { margin-bottom: 1rem; }
+        input[type="text"], input[type="password"], input[type="email"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--purple-primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+        button:hover { background-color: var(--purple-dark); }
+        .footer-link { text-align: center; margin-top: 1.5rem; font-size: 0.95rem; }
+        .footer-link a { color: var(--purple-primary); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <nav>
+        <strong>Task Manager</strong>
+        <div>
+        {% if user.is_authenticated %}
+            <span>Welcome, {{ user.username }}</span>
+            <a href="{% url 'task_list' %}">My Tasks</a>
+            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" style="width:auto; padding: 5px 10px; margin:0; font-size: 0.9rem; background: none; border: 1px solid white;">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+        </div>
+    </nav>
+    <div class="container">
+        <div class="card">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>
