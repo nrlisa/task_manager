@@ -1,7 +1,7 @@
 # Secure Task Manager
 
 ## 1. Project Description
-The Secure Task Manager is a robust Django-based web application designed with a "Security First" philosophy. It provides a platform for users to manage their personal tasks while ensuring data integrity, confidentiality, and availability. The system implements strict Role-Based Access Control (RBAC) and comprehensive audit logging to meet modern security standards (OWASP ASVS).
+The Secure Task Manager is a robust Django-based web application designed with a "Security First" philosophy. It provides a platform for users to manage their personal tasks while ensuring data integrity, confidentiality, and availability. The system implements a comprehensive audit logging to meet modern security standards (OWASP ASVS).
 
 ## 2. Installation Steps
 Follow these steps to set up the project locally:
@@ -66,14 +66,16 @@ python manage.py runserver
 *   **argon2-cffi**: Advanced password hashing.
 
 ## 6. Screenshots
-*(Note: Insert your system screenshots here in your final report)*
-*   [Screenshot 1: Login Page]
-*   [Screenshot 2: Task Dashboard]
-*   [Screenshot 3: Logging & Monitoring Admin View]
+## 1. Login Page
+![page Screenshot](images/login.png)
+### 2. User Dashboard
+![user Screenshot](images/user.png)
+## 3. Admin Dashboard
+![admin Screenshot](images/admin.png)
 
 ---
 
-## GitHub Release (Bonus)
+## GitHub Release 
 To tag the initial secure release, use the following commands:
 ```bash
 git tag -a v1.0.0 -m "Initial Secure Release: Implemented RBAC, Audit Logging, and IDOR protection."
