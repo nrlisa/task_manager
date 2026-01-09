@@ -8,6 +8,9 @@ from django.contrib.auth import login as auth_login
 from django.http import HttpResponseForbidden
 from .models import Task
 from .forms import TaskForm
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Custom Form to restrict username length
 class CustomUserCreationForm(UserCreationForm):
