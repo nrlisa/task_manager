@@ -75,9 +75,3 @@ python manage.py runserver
 
 ---
 
-## GitHub Release 
-To tag the initial secure release, use the following commands:
-```bash
-git tag -a v1.0.0 -m "Initial Secure Release: Implemented RBAC, Audit Logging, and IDOR protection."
-git push origin v1.0.0
-```
