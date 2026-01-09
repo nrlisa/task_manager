@@ -17,13 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from tasks.views import register, login_success_redirect, custom_400, custom_403, custom_404, custom_500
+from tasks.views import register, login_success_redirect, custom_400, custom_403, custom_404, custom_500, profile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', auth_views.LoginView.as_view(template_name='login.html', redirect_authenticated_user=True), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', register, name='register'),
+    path('profile/', profile, name='profile'),
     path('login-redirect/', login_success_redirect, name='login_success_redirect'),
     path('tasks/', include('tasks.urls')),
 ]
