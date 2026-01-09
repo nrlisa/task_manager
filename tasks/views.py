@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login as auth_login
 from django.http import HttpResponseForbidden
+from django.core.exceptions import PermissionDenied
 from .models import Task
 from .forms import TaskForm
 import logging
@@ -27,7 +28,9 @@ def register(request):
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
-            return redirect('task_list')
+            return redirect('login_success_redirect')
+        else:
+            logger.warning(f"Registration failed: {form.errors.as_json()}")
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -87,7 +90,7 @@ def delete_task(request, pk):
     
     # Granular RBAC: Check if user is owner OR has the global delete permission
     if not (task.owner == request.user or request.user.has_perm('tasks.delete_task')):
-        return HttpResponseForbidden("You do not have permission to delete this task.")
+        raise PermissionDenied
     
     if request.method == "POST":
         task.delete()
@@ -98,5 +101,7 @@ def delete_task(request, pk):
 @login_required
 def login_success_redirect(request):
     if request.user.is_staff:
+        logger.info(f"Admin login detected: Redirecting {request.user.username} to Admin Panel.")
         return redirect('admin:index')
+    logger.info(f"Regular login detected: Redirecting {request.user.username} to Task List.")
     return redirect('task_list')

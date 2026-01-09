@@ -103,8 +103,8 @@ LOGIN_URL = 'login'  # Redirects to the named URL 'login'
 LOGIN_REDIRECT_URL = 'login_success_redirect'  # Redirects here after successful login
 LOGOUT_REDIRECT_URL = 'login'
 
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Strict'
 CSRF_COOKIE_SAMESITE = 'Strict'
@@ -126,6 +126,7 @@ SECURE_PROXY_SSL_HEADER = None
 
 # 9. Static Files
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGGING = {

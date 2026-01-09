@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Server Error (500)</title>
-    <style>body { font-family: sans-serif; text-align: center; padding: 50px; }</style>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; text-align: center; padding: 100px 20px; }
+        h1 { color: #dc3545; font-size: 3rem; margin-bottom: 1rem; }
+        p { font-size: 1.2rem; color: #6c757d; margin-bottom: 2rem; }
+        .btn { display: inline-block; padding: 10px 25px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; transition: background 0.3s; }
+        .btn:hover { background-color: #0056b3; }
+    </style>
 </head>
 <body>
-    <h1>500 - Internal Server Error</h1>
-    <p>An unexpected error occurred on our end. We have been notified and are looking into it.</p>
-    <a href="/">Return Home</a>
+    <div class="container">
+        <h1>500</h1>
+        <h2>Internal Server Error</h2>
+        <p>Something went wrong on our end.<br>
+           Our technical team has been notified and is working to resolve the issue.</p>
+        <a href="/" class="btn">Return to Dashboard</a>
+    </div>
 </body>
 </html>
