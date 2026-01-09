@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import Q
 from django.core.validators import RegexValidator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
@@ -31,9 +32,17 @@ def register(request):
 # 1. READ: List tasks (Access Control implemented)
 @login_required
 def task_list(request):
-    # Security: Users only see their own tasks (IDOR Protection)
+    query = request.GET.get('q', '')
+    # IDOR Prevention: Always start by filtering by the current user
     tasks = Task.objects.filter(owner=request.user)
-    return render(request, 'tasks/task_list.html', {'tasks': tasks})
+
+    if query:
+        # Parameterized Everything: Using ORM filters with Q objects prevents SQL Injection
+        tasks = tasks.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+    
+    return render(request, 'tasks/task_list.html', {'tasks': tasks, 'query': query})
 
 # 2. CREATE: Add new task (Input Validation via Forms)
 @login_required

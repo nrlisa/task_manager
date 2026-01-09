@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>My Tasks</h2>
+    
+    <!-- Injection-free Search Bar -->
+    <form method="get" action="{% url 'task_list' %}" style="margin-bottom: 1.5rem; display: flex; gap: 10px;">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search tasks..." style="margin-top: 0; flex: 1;">
+        <button type="submit" style="margin-top: 0; width: auto; padding: 0 20px;">Search</button>
+    </form>
+
     <div style="text-align: right; margin-bottom: 1rem;">
         <a href="{% url 'create_task' %}" style="color: var(--purple-primary); font-weight: bold; text-decoration: none;">+ Create New Task</a>
     </div>
