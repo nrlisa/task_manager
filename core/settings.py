@@ -101,8 +101,8 @@ LOGIN_URL = 'login'  # Redirects to the named URL 'login'
 LOGIN_REDIRECT_URL = 'login_success_redirect'  # Redirects here after successful login
 LOGOUT_REDIRECT_URL = 'login'
 
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Strict'
 CSRF_COOKIE_SAMESITE = 'Strict'
@@ -113,6 +113,14 @@ SESSION_COOKIE_AGE = 1200  # 20 minutes
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
+SECURE_REFERRER_POLICY = 'same-origin'
+
+# SSL/HTTPS Settings (Production only)
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 # 9. Static Files
 STATIC_URL = 'static/'
