@@ -14,7 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
         max_length=8, 
         help_text="Required. 8 characters or fewer.",
-        validators=[RegexValidator(r'^[\w.@+-]+$', "Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_ characters.")]
+        validators=[RegexValidator(r'^[a-zA-Z0-9]+$', "Usernames must be alphanumeric and max 8 characters.")]
     )
 
 # 0. AUTH: User Registration
@@ -79,13 +79,12 @@ def edit_task(request, pk):
 
 # 4. DELETE: Secure deletion
 @login_required
-@permission_required('tasks.delete_task', raise_exception=True)
 def delete_task(request, pk):
-    if request.user.has_perm('tasks.delete_task'):
-        task = get_object_or_404(Task, pk=pk)
-    else:
-        # Ensure users can only delete tasks they own
-        task = get_object_or_404(Task, pk=pk, owner=request.user)
+    task = get_object_or_404(Task, pk=pk)
+    
+    # Granular RBAC: Check if user is owner OR has the global delete permission
+    if not (task.owner == request.user or request.user.has_perm('tasks.delete_task')):
+        return HttpResponseForbidden("You do not have permission to delete this task.")
     
     if request.method == "POST":
         task.delete()

@@ -27,3 +27,9 @@ urlpatterns = [
     path('login-redirect/', login_success_redirect, name='login_success_redirect'),
     path('tasks/', include('tasks.urls')),
 ]
+
+# Custom Error Handlers (OWASP ASVS V7)
+handler400 = 'django.views.defaults.bad_request'
+handler403 = 'django.views.defaults.permission_denied'
+handler404 = 'django.views.defaults.page_not_found'
+handler500 = 'django.views.defaults.server_error'
