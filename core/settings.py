@@ -63,13 +63,6 @@ DATABASES = {
     }
 }
 
-# Cache backend required for rate limiting
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
-
 # 6. Password Validation & Hashing
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -104,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # 7. Authentication & Session Management
 LOGIN_URL = 'login'  # Redirects to the named URL 'login'
-LOGIN_REDIRECT_URL = 'task_list'  # Redirects here after successful login
+LOGIN_REDIRECT_URL = 'login_success_redirect'  # Redirects here after successful login
 LOGOUT_REDIRECT_URL = 'login'
 
 CSRF_COOKIE_SECURE = False

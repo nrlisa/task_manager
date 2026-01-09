@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Delete Task</h2>
+    <p>Are you sure you want to delete "<strong>{{ task.title }}</strong>"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="background-color: #d32f2f;">Confirm Delete</button>
+    </form>
+    <p class="footer-link"><a href="{% url 'task_list' %}">Cancel</a></p>
+{% endblock %}

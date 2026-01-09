@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>My Tasks</h2>
+    <div style="text-align: right; margin-bottom: 1rem;">
+        <a href="{% url 'create_task' %}" style="color: var(--purple-primary); font-weight: bold; text-decoration: none;">+ Create New Task</a>
+    </div>
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="border-bottom: 2px solid var(--purple-light);">
+                <th style="text-align: left; padding: 8px;">Title</th>
+                <th style="text-align: left; padding: 8px;">Status</th>
+                <th style="text-align: right; padding: 8px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr style="border-bottom: 1px solid var(--purple-light);">
+                <td style="padding: 8px;">{{ task.title }}</td>
+                <td style="padding: 8px;">{% if task.is_completed %}✅{% else %}⏳{% endif %}</td>
+                <td style="padding: 8px; text-align: right;">
+                    <a href="{% url 'edit_task' task.pk %}" style="color: var(--purple-primary); margin-right: 10px;">Edit</a>
+                    <a href="{% url 'delete_task' task.pk %}" style="color: #d32f2f;">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" style="text-align: center; padding: 20px;">No tasks found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

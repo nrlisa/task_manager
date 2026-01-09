@@ -92,6 +92,9 @@
         {% if user.is_authenticated %}
             <span>Welcome, {{ user.username }}</span>
             <a href="{% url 'task_list' %}">My Tasks</a>
+            {% if user.is_staff %}
+                <a href="{% url 'admin:index' %}">Django Admin</a>
+            {% endif %}
             <form action="{% url 'logout' %}" method="post" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" style="width:auto; padding: 5px 10px; margin:0; font-size: 0.9rem; background: none; border: 1px solid white;">Logout</button>
