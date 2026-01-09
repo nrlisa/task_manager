@@ -26,6 +26,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',  # MUST BE #1
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -97,6 +98,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+# 7. Internationalization
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'Asia/Kuala_Lumpur'
+USE_I18N = True
+USE_TZ = True
 
 # 7. Authentication & Session Management
 LOGIN_URL = 'login'  # Redirects to the named URL 'login'

@@ -17,11 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from tasks.views import register, login_success_redirect
+from tasks.views import register, login_success_redirect, custom_400, custom_403, custom_404, custom_500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('', auth_views.LoginView.as_view(template_name='login.html', redirect_authenticated_user=True), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', register, name='register'),
     path('login-redirect/', login_success_redirect, name='login_success_redirect'),
@@ -29,7 +29,7 @@ urlpatterns = [
 ]
 
 # Custom Error Handlers (OWASP ASVS V7)
-handler400 = 'django.views.defaults.bad_request'
-handler403 = 'django.views.defaults.permission_denied'
-handler404 = 'django.views.defaults.page_not_found'
-handler500 = 'django.views.defaults.server_error'
+handler400 = 'tasks.views.custom_400'
+handler403 = 'tasks.views.custom_403'
+handler404 = 'tasks.views.custom_404'
+handler500 = 'tasks.views.custom_500'

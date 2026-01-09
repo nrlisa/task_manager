@@ -38,6 +38,10 @@ def register(request):
 # 1. READ: List tasks (Access Control implemented)
 @login_required
 def task_list(request):
+    # Restrict access: Admins go to the Admin Panel, not the Task List
+    if request.user.is_staff:
+        return redirect('admin:index')
+
     query = request.GET.get('q', '')
     # IDOR Prevention: Always start by filtering by the current user
     tasks = Task.objects.filter(owner=request.user)
@@ -105,3 +109,15 @@ def login_success_redirect(request):
         return redirect('admin:index')
     logger.info(f"Regular login detected: Redirecting {request.user.username} to Task List.")
     return redirect('task_list')
+
+def custom_400(request, exception=None):
+    return render(request, '400.html', status=400)
+
+def custom_403(request, exception=None):
+    return render(request, '403.html', status=403)
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
+def custom_500(request):
+    return render(request, '500.html', status=500)
