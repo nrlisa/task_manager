@@ -13,12 +13,13 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# Custom Form to restrict username length
+# Username whitelisting
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
-        max_length=8, 
-        help_text="Required. 8 characters or fewer.",
-        validators=[RegexValidator(r'^[a-zA-Z0-9]+$', "Usernames must be alphanumeric and max 8 characters.")]
+        min_length=8,
+        max_length=30, 
+        help_text="Required. 8-30 characters. Alphanumeric only.",
+        validators=[RegexValidator(r'^[a-zA-Z0-9]+$', "Usernames must be alphanumeric.")]
     )
 
 # 0. AUTH: User Registration
@@ -47,7 +48,7 @@ def task_list(request):
     tasks = Task.objects.filter(owner=request.user)
 
     if query:
-        # Parameterized Everything: Using ORM filters with Q objects prevents SQL Injection
+        # Parameterized 
         tasks = tasks.filter(
             Q(title__icontains=query) | Q(description__icontains=query)
         )

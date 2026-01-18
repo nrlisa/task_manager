@@ -9,7 +9,7 @@ class TaskForm(forms.ModelForm):
 
     def clean_title(self):
         title = self.cleaned_data.get('title')
-        # [Whitelisting] Allow only alphanumeric and spaces
+        # Whitelisting
         if not re.match(r'^[a-zA-Z0-9\s]+$', title):
             raise forms.ValidationError("Invalid characters! Only letters and numbers allowed.")
         return title
